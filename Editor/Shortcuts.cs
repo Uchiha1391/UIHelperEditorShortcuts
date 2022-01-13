@@ -33,19 +33,19 @@ public static class Shortcuts
             return;
         }
 
-        Transform CheckForCanvasTransform=Parent.transform;
-        bool DoesHaveCanvas=false;
-        bool BreakLoop=false;
+        Transform CheckForCanvasTransform = Parent.transform;
+        bool DoesHaveCanvas = false;
+        bool BreakLoop = false;
         while (!BreakLoop)
         {
             if (CheckForCanvasTransform == Parent.transform.root)
             {
                 BreakLoop = true;
             }
+
             Canvas Canvas = CheckForCanvasTransform.gameObject.GetComponent<Canvas>();
             if (Canvas != null)
             {
-
                 DoesHaveCanvas = true;
                 break;
             }
@@ -91,10 +91,10 @@ public static class Shortcuts
             {
                 BreakLoop = true;
             }
+
             Canvas Canvas = CheckForCanvasTransform.gameObject.GetComponent<Canvas>();
             if (Canvas != null)
             {
-
                 DoesHaveCanvas = true;
                 break;
             }
@@ -139,10 +139,10 @@ public static class Shortcuts
             {
                 BreakLoop = true;
             }
+
             Canvas Canvas = CheckForCanvasTransform.gameObject.GetComponent<Canvas>();
             if (Canvas != null)
             {
-
                 DoesHaveCanvas = true;
                 break;
             }
@@ -185,12 +185,11 @@ public static class Shortcuts
     }
 
 
-
     /// <summary>
     /// This function is like blender apply trasnform. it will make child 0 while change parent transform
     /// </summary>
     [MenuItem("My Ui Commands/PushChild_RectTransformToParent #&t")]
-    public static void PushChildRectTrasnformToParent()
+    public static void PushChildRectTransformToParentGui()
     {
         var SelectedChildObj = Selection.activeGameObject;
         Transform TransformParent = SelectedChildObj.GetComponent<RectTransform>().parent;
@@ -202,22 +201,20 @@ public static class Shortcuts
         if (TransformParent != null)
         {
             Undo.RecordObject(TransformParent.gameObject, "UndoParentTransform");
-            Vector3 SelectedObjLocalPosition = SelectedChildObj.GetComponent<RectTransform>().localPosition;
-            var Invert_SelectedObjLocalPosition = new Vector3(
-                -SelectedObjLocalPosition.x,
-                -SelectedObjLocalPosition.y,
-                -SelectedObjLocalPosition.z
-
-
-            );
-            TransformParent.localPosition -= Invert_SelectedObjLocalPosition; // minus is very important
+            Vector3 SelectedObjLocalPosition =
+                SelectedChildObj.GetComponent<RectTransform>().localPosition;
+            var Invert_SelectedObjLocalPosition = new Vector3(-SelectedObjLocalPosition.x,
+                -SelectedObjLocalPosition.y, -SelectedObjLocalPosition.z);
+            TransformParent.localPosition -=
+                Invert_SelectedObjLocalPosition; // minus is very important
 
             for (int Index = 0; Index < TransformParent.childCount; Index++)
 
 
             {
                 Transform Child = TransformParent.GetChild(Index);
-                if (Child.gameObject.Equals(SelectedChildObj)) continue; // don't do anything with same object .it will cause bug
+                if (Child.gameObject.Equals(SelectedChildObj))
+                    continue; // don't do anything with same object .it will cause bug
                 Undo.RecordObject(Child, "UndoChildTransform");
 
                 Vector3 ChildLocalPosition = Child.GetComponent<RectTransform>().localPosition;
@@ -225,24 +222,18 @@ public static class Shortcuts
                 Child.GetComponent<RectTransform>().localPosition = DifferenceTransform;
             }
 
-            SelectedChildObj.GetComponent<RectTransform>().localPosition += Invert_SelectedObjLocalPosition;// plus is very important
+            SelectedChildObj.GetComponent<RectTransform>().localPosition +=
+                Invert_SelectedObjLocalPosition; // plus is very important
 
             Debug.Log(SelectedChildObj.GetComponent<RectTransform>().localPosition);
         }
-
-  
-
-
-
-
-
     }
 
     /// <summary>
     /// This function is like blender apply trasnform. it will make child 0 while change parent transform
     /// </summary>
     [MenuItem("My Ui Commands/PushChildTransformToParent #t")]
-    public static void PushChildTrasnformToParent()
+    public static void PushChildTransformToParent3d()
     {
         var SelectedChildObj = Selection.activeGameObject;
         Transform TransformParent = SelectedChildObj.transform.parent;
@@ -255,21 +246,18 @@ public static class Shortcuts
         {
             Undo.RecordObject(TransformParent.gameObject, "UndoParentTransform");
             Vector3 SelectedObjLocalPosition = SelectedChildObj.transform.localPosition;
-            var Invert_SelectedObjLocalPosition = new Vector3(
-                -SelectedObjLocalPosition.x,
-                -SelectedObjLocalPosition.y,
-                -SelectedObjLocalPosition.z
-
-
-            );
-            TransformParent.localPosition -= Invert_SelectedObjLocalPosition; // minus is very important
+            var Invert_SelectedObjLocalPosition = new Vector3(-SelectedObjLocalPosition.x,
+                -SelectedObjLocalPosition.y, -SelectedObjLocalPosition.z);
+            TransformParent.localPosition -=
+                Invert_SelectedObjLocalPosition; // minus is very important
 
             for (int Index = 0; Index < TransformParent.childCount; Index++)
 
 
             {
                 Transform Child = TransformParent.GetChild(Index);
-                if (Child.gameObject.Equals(SelectedChildObj)) continue; // don't do anything with same object .it will cause bug
+                if (Child.gameObject.Equals(SelectedChildObj))
+                    continue; // don't do anything with same object .it will cause bug
                 Undo.RecordObject(Child, "UndoChildTransform");
 
                 Vector3 ChildLocalPosition = Child.transform.localPosition;
@@ -277,12 +265,15 @@ public static class Shortcuts
                 Child.transform.localPosition = DifferenceTransform;
             }
 
-            SelectedChildObj.transform.localPosition += Invert_SelectedObjLocalPosition;// plus is very important
+            SelectedChildObj.transform.localPosition +=
+                Invert_SelectedObjLocalPosition; // plus is very important
 
             Debug.Log(SelectedChildObj.transform.localPosition);
+
+
         }
-
-
     }
 
+
+  
 }
